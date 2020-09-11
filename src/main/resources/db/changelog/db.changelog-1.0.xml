@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+    http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet  author="Allar"  id="Create database tables">
+        <createTable  tableName="account">
+
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="account_nr" type="text">
+                <constraints nullable="false" unique="true"/>
+            </column>
+
+            <column name="balance" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        
+        <createTable tableName="client">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            
+            <column name="first_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="last_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+            
+            <column name="user_name" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="password" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+        </createTable>
+        
+        <createTable tableName="transaction_log">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+
+            <column name="time_stamp" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="transaction_type" type="text">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="amount" type="numeric">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="account_id_from" type="bigint">
+                <constraints foreignKeyName="fk_account_id_from" nullable="true" references="account(id)"/>
+            </column>
+
+            <column name="account_id_to" type="bigint">
+                <constraints foreignKeyName="fk_account_id_to" nullable="true" references="account(id)"/>
+            </column>
+            </createTable>
+
+        </changeSet>
+
+    <changeSet  author="Allar"  id="Client id added to account table">
+        <addColumn tableName="account">
+            <column name="client_id" type="bigint">
+                <constraints foreignKeyName="fk_client_id" nullable="false" references="client(id)"/>
+            </column>
+        </addColumn>
+    </changeSet>
+
+
+</databaseChangeLog>

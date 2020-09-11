@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>THE BANK</title>
+    <meta http-equiv="Cache-Control" content="NO-CACHE">
+    <link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">
+
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="styles.css">-->
+
+    <title>THE BANK</title>
+</head>
+<body>
+
+    <h1 align ="middle"> --- THE BANK --- </h1>
+    <hr style="width:50%">
+
+    <form method="POST" action="login" align="middle">
+        <input id="username" type="username" name="username" placeholder="Username" style="width: 200px"><br><br>
+        <input id="password" type="password" name="password" placeholder="Password" style="width: 200px"><br><br>
+        <input type="submit" id="login" name="login" value="Log in" style="width: 200px">
+    </form>
+
+    <hr style="width:50%">
+
+    <form align="middle" >
+        <input type="button" id="addClient" value="Register as Client" style="width: 200px">
+    </form>
+
+    <script>
+        let registerClientButton = document.getElementById("addClient");
+
+        registerClientButton.onclick = function checkBalance() {
+            window.open("/addnewclient.html", "_self");
+        }
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>THE BANK</title>
+    <meta http-equiv="Cache-Control" content="NO-CACHE">
+    <link rel="icon" href="demo_icon.gif" type="image/gif" sizes="16x16">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <!--<link rel="stylesheet" href="styles.css">-->
+</head>
+<body>
+    <h1 align ="middle"> --- THE BANK --- </h1>
+
+    <form align="middle" >
+        <input type="text" id="firstName" placeholder="First Name"><br><br>
+        <input type="text" id="lastName" placeholder="Last Name" ><br><br>
+        <input type="text" id="userName" placeholder="User Name"><br><br>
+        <input type="password" id="passWord" placeholder="Password"><br><br>
+        <input type="button" id="register" value="Submit"><br>
+
+
+        <hr style="width:50%">
+        <input type="text" id="clientID" placeholder="Client ID" size="5">
+        <input type="button" id="addAccount" value="Add Account"><br>
+
+        <hr style="width:50%">
+        <p id = "text" align ="middle"></p>
+
+
+    </form>
+
+    <script>
+        let firstName = document.getElementById('firstName');
+        let lastName = document.getElementById('lastName');
+        let userName = document.getElementById('lastName');
+        let password = document.getElementById('passWord');
+        let clientID = document.getElementById('clientID');
+
+        let submitButton = document.getElementById('register');
+        let addAccountButton = document.getElementById('addAccount');
+
+        let text = document.getElementById('text');
+
+        //ADD CLIENT
+        submitButton.onclick = function addClient() {
+            fetch('/SQL/addclient', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    userName: userName.value,
+                    password: password.value
+                })
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(jsonData) {
+                    clientID.value = jsonData;
+                    text.innerText = "New client added. Client ID: " + jsonData;
+                })
+                .catch(function(err) {
+                    console.log(err);
+                    alert("This does not seem right");
+                });
+        }
+
+        //ADD ACCOUNT
+        addAccountButton.onclick = function addClient (){
+            fetch('/SQL/addaccount', {
+                method: 'POST',
+                cache: 'no-cache',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    clientId: clientID.value
+                })
+            })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(jsonData) {
+                    text.innerText = "Account added! Account Nr: " + jsonData;
+                })
+                .catch(function(err) {
+                    console.log('This does not seem right');
+                });
+        }
+
+    </script>
+
+</body>
+</html>
