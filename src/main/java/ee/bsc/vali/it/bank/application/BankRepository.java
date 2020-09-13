@@ -29,7 +29,7 @@ public class BankRepository {
     private NamedParameterJdbcTemplate jdbcTemplate;
 
     //Add client
-    public long addClient(Client client, String password) {
+    public long addClient(Client client) {
         //String sql2 = "SELECT nextval(pg_get_serial_sequence('client','id'))";
         String sql = "INSERT INTO client (first_name, last_name, user_name, password) VALUES (:firstName, :lastName, :userName, :password)";
 
@@ -37,9 +37,9 @@ public class BankRepository {
         paramMap.put("firstName", client.getFirstName());
         paramMap.put("lastName", client.getLastName());
         paramMap.put("userName", client.getUserName());
-        paramMap.put("password", password);
+        paramMap.put("password", client.getPassword());
 
-        //add new client to database and return its ID key
+        //Add new client to database and return its ID key
         KeyHolder generatedKeyHolder = new GeneratedKeyHolder();
         SqlParameterSource parameterSource = new MapSqlParameterSource(paramMap);
         jdbcTemplate.update(sql, parameterSource, generatedKeyHolder);

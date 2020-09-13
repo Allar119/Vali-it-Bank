@@ -20,8 +20,11 @@ public class BankService {
 
     //Add new customer:
     public long addClient(Client client) {
-        String passwordHash = passwordEncoder.encode(client.getPassword());
-        return bankRepository.addClient(client, passwordHash);
+        //String passwordHash = passwordEncoder.encode(client.getPassword());
+        client.setPassword(passwordEncoder.encode(client.getPassword()));
+        long clientId =  bankRepository.addClient(client);
+        addAccount(clientId);
+        return clientId;
     }
 
     //Add new account
