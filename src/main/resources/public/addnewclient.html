@@ -14,21 +14,15 @@
     <h1 align ="middle"> --- THE BANK --- </h1>
 
     <form align="middle" >
+        <hr style="width:50%">
         <input type="text" id="firstName" placeholder="First Name"><br><br>
         <input type="text" id="lastName" placeholder="Last Name" ><br><br>
         <input type="text" id="userName" placeholder="User Name"><br><br>
         <input type="password" id="passWord" placeholder="Password"><br><br>
         <input type="button" id="register" value="Submit"><br>
-
-
         <hr style="width:50%">
-        <input type="text" id="clientID" placeholder="Client ID" size="5">
-        <input type="button" id="addAccount" value="Add Account"><br>
 
-        <hr style="width:50%">
-        <p id = "text" align ="middle"></p>
-
-
+        <div id="text"></div>
     </form>
 
     <script>
@@ -36,16 +30,12 @@
         let lastName = document.getElementById('lastName');
         let userName = document.getElementById('lastName');
         let password = document.getElementById('passWord');
-        let clientID = document.getElementById('clientID');
-
         let submitButton = document.getElementById('register');
-        let addAccountButton = document.getElementById('addAccount');
-
         let text = document.getElementById('text');
 
         //ADD CLIENT
         submitButton.onclick = function addClient() {
-            fetch('/SQL/addclient', {
+            fetch('/api/addclient', {
                 method: 'POST',
                 cache: 'no-cache',
                 headers: {
@@ -62,35 +52,12 @@
                     return response.json();
                 })
                 .then(function(jsonData) {
-                    clientID.value = jsonData;
+                    console.log(jsonData)
                     text.innerText = "New client added. Client ID: " + jsonData;
                 })
                 .catch(function(err) {
                     console.log(err);
-                    alert("This does not seem right");
-                });
-        }
-
-        //ADD ACCOUNT
-        addAccountButton.onclick = function addClient (){
-            fetch('/SQL/addaccount', {
-                method: 'POST',
-                cache: 'no-cache',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    clientId: clientID.value
-                })
-            })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(jsonData) {
-                    text.innerText = "Account added! Account Nr: " + jsonData;
-                })
-                .catch(function(err) {
-                    console.log('This does not seem right');
+                    alert("Something went wrong");
                 });
         }
 

@@ -15,10 +15,9 @@ let text1 = document.getElementById("text1");
 let text2 = document.getElementById("text2");
 let txt = document.getElementById("myData");
 
-
 userDetailsButton.onclick = function checkBalance() {
 
-    fetch('SQL/userdetails', {
+    fetch('api/userdetails', {
         method: 'GET',
         cache: 'no-cache',
         headers: {
@@ -36,10 +35,9 @@ userDetailsButton.onclick = function checkBalance() {
         });
 }
 
-
 balanceButton.onclick = function checkBalance() {
 
-    fetch('/SQL/' + accountNr.value, {
+    fetch('/api/' + accountNr.value, {
         method: 'GET',
         cache: 'no-cache',
         headers: {
@@ -59,7 +57,7 @@ balanceButton.onclick = function checkBalance() {
 
 depositButton.onclick = function depositMoney(){
 
-    fetch('/SQL/deposit', {
+    fetch('/api/deposit', {
         method: 'PUT',
         cache: 'no-cache',
         headers: {
@@ -83,7 +81,7 @@ depositButton.onclick = function depositMoney(){
 }
 
 withdrawButton.onclick = function withdrawMoney(){
-    fetch('/SQL/withdraw', {
+    fetch('/api/withdraw', {
         method: 'PUT',
         cache: 'no-cache',
         headers: {
@@ -107,7 +105,10 @@ withdrawButton.onclick = function withdrawMoney(){
 }
 
 transferButton.onclick = function transferMoney(){
-    fetch('/SQL/transfer', {
+
+    text2.innerText = "";
+
+    fetch('/api/transfer', {
         method: 'PUT',
         cache: 'no-cache',
         headers: {
@@ -123,7 +124,7 @@ transferButton.onclick = function transferMoney(){
             return response.json();
         })
         .then(function(jsonData) {
-            text2.innerText = "Account Balance: " + jsonData + " €";
+            text2.innerText = jsonData + "€ Transferred";
         })
         .catch(function(err) {
             console.log('This does not seem right');
@@ -136,7 +137,7 @@ allAccountButton.onclick = function getAllAccount(){
     console.log("press");
     let object;
 
-    fetch('/SQL/getallaccounts', {
+    fetch('/api/getallaccounts', {
         method: 'GET',
         cache: 'no-cache',
         headers: {
@@ -159,9 +160,9 @@ allAccountButton.onclick = function getAllAccount(){
         for (let i = 0; i < jsonData.length; i++) {
             let div = document.createElement("div");
             div.innerHTML = "ID: " + jsonData[i].id
-                + "Account nr: " + jsonData[i].accountNr
-                + "Balance: " + jsonData[i].accountBalance
-                + "Client ID: " + jsonData[i].clientId;
+                + " Account nr: " + jsonData[i].accountNr
+                + " Balance: " + jsonData[i].accountBalance
+                + " Client ID: " + jsonData[i].clientId;
             txt.appendChild(div);
         }
     }

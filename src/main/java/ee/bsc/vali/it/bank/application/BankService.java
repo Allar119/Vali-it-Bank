@@ -149,6 +149,7 @@ public class BankService {
         return bankRepository.getTransactionHistory();
     }
 
+
     public String transactionLogToText (List<TransactionLog> log){
         StringBuilder output = new StringBuilder();
 
